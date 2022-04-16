@@ -20,6 +20,7 @@ import Order from './Pages/Order/Order';
 function App() {
 
   const port = 4005
+  const url = `http://localhost:${port}`
   return (
     <div>
       <Header></Header>
@@ -29,7 +30,7 @@ function App() {
         <Route path="/" element={
 
 
-          <Home port={port}></Home>
+          <Home url={url}></Home>
 
         }></Route>
         <Route path="/home" element={
@@ -37,29 +38,29 @@ function App() {
           <Home></Home>
 
         }></Route>
-        <Route path='/service/:serviceId' element={<ServiceDetail port={port}></ServiceDetail>}></Route>
+        <Route path='/service/:serviceId' element={<ServiceDetail url={url} port={port}></ServiceDetail>}></Route>
         <Route path="/about" element={<About></About>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
         <Route path="/checkout/:serviceId" element={
           <RequireAuth>
-            <Checkout></Checkout>
+            <Checkout url={url}></Checkout>
           </RequireAuth>
         }></Route>
 
         <Route path="/addservice" element={
           <RequireAuth>
-            <AddService port={port}></AddService>
+            <AddService url={url}></AddService>
           </RequireAuth>
         }></Route>
         <Route path="/manage" element={
           <RequireAuth>
-            <ManageServices port={port}></ManageServices>
+            <ManageServices url={url}></ManageServices>
           </RequireAuth>
         }></Route>
         <Route path="/orders" element={
           <RequireAuth>
-            <Order port={port}></Order>
+            <Order url={url} ></Order>
           </RequireAuth>
         }></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>

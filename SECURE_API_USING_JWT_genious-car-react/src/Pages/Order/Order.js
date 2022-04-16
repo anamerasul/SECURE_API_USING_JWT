@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Order = () => {
+const Order = ({ url }) => {
+
+    const [orders, setOrder] = useState({})
+
+    useEffect(() => {
+
+
+
+    }, [])
     return (
         <div>
             <h2>your order</h2>

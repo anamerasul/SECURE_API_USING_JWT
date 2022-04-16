@@ -6,8 +6,9 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import axios from "axios";
 import { toast } from 'react-toastify';
-const Checkout = () => {
-
+const Checkout = ({ url }) => {
+    // console.log(url)
+    const path = `order`
     const { serviceId } = useParams()
     const [service] = useServiceDetails(serviceId)
 
@@ -67,7 +68,7 @@ const Checkout = () => {
             address: event.target.address.value,
             phone: event.target.phone.value
         }
-        axios.post('http://localhost:4005/order', order)
+        axios.post(`${url}/${path}`, order)
             .then(response => {
                 const { data } = response;
                 if (data.insertedId) {

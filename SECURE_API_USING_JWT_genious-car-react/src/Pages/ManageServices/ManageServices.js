@@ -1,12 +1,14 @@
 import React from 'react';
 import useServicesHook from './../../Hooks/useServicesHooks'
-const ManageServices = ({ port }) => {
-
+const ManageServices = ({ url }) => {
     const [services, setServices] = useServicesHook([]);
+
+    const path = `/service`
 
     const handleDeleteBtn = (id) => {
         // const procced = window.confirm("are you sure")
-        const uri = `http://localhost:${port}/service/${id}`;
+        const uri = `${url}${path}/${id}`;
+        // const uri = `${process.env.URL}/service/${id}`
         // if (procced) {
 
         //     const url = `http://localhost:${port}/service/${id}`

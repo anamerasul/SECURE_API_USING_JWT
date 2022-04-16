@@ -1,14 +1,19 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
-const AddService = ({ port }) => {
+const AddService = ({ url}) => {
+    console.log(url)
 
-    const url = `http://localhost:${port}/service`
+    const path=`/service`
+
+    const uri = `${url}${path}`
+
+    console.log(uri)
     // console.log(port)
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
 
         // console.log(data);
-        fetch(url, {
+        fetch(uri, {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',

@@ -8,6 +8,7 @@ const useServiceDetails = (serviceId) => {
 
 
     const uri = `http://localhost:${port}/service/${serviceId}`
+    // const uri = `${process.env.URL}/service/${serviceId}`
 
     useEffect(() => {
 
