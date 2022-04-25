@@ -31,7 +31,8 @@ const run = async () => {
         await client.connect();
 
         console.log("db connected");
-        const serviceCollection = client.db("JWTgeniousCar").collection("JWTservice");
+        const serviceCollection = client.db("JWTgeniousCar").collection("JWTorder");
+        const orderCollection = client.db("JWTgeniousCar").collection("JWTservice");
 
         app.get('/service', async (req, res) => {
 
@@ -69,6 +70,15 @@ const run = async () => {
             const query = { _id: ObjectId(id) };
             const result = await serviceCollection.deleteOne(query);
             res.send(result);
+        });
+
+
+        // order collection api
+
+        app.post("/order", async (req, res) => {
+            const order = req.body
+            const result = await orderCollection.insertOne(order)
+            res.send(result)
         });
 
         // const users = { name: 'mahi', email: 'mahi@gmail.com' }
