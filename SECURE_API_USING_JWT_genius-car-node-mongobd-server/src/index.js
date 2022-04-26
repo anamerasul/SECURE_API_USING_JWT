@@ -31,8 +31,8 @@ const run = async () => {
         await client.connect();
 
         console.log("db connected");
-        const serviceCollection = client.db("JWTgeniousCar").collection("JWTorder");
-        const orderCollection = client.db("JWTgeniousCar").collection("JWTservice");
+        const serviceCollection = client.db("JWTgeniousCar").collection("JWTservice");
+        const orderCollection = client.db("JWTgeniousCar").collection("JWTorder");
 
         app.get('/service', async (req, res) => {
 

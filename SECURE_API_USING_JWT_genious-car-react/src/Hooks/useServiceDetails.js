@@ -7,12 +7,12 @@ const useServiceDetails = (serviceId) => {
     const port = 4005
 
 
-    const url = `http://localhost:${port}/service/${serviceId}`
+    const uri = `http://localhost:${port}/service/${serviceId}`
 
     useEffect(() => {
 
         // console.log(url);
-        fetch(url)
+        fetch(uri)
             .then(res => res.json())
             .then(data => { setService(data) })
 

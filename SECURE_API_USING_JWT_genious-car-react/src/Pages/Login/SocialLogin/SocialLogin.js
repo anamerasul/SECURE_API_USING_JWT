@@ -18,6 +18,9 @@ const SocialLogin = () => {
     const navigate = useNavigate();
 
     const location = useLocation()
+    let from = location.state?.form?.pathname || '/'
+
+    console.log(from);
 
     let errorElement;
 
@@ -33,7 +36,7 @@ const SocialLogin = () => {
         }
 
         if (user || user1) {
-            navigate('/home');
+            navigate(from, { replace: true })
         }
 
 
@@ -44,17 +47,19 @@ const SocialLogin = () => {
 
     useEffect(() => {
 
-        let from = location.state?.form?.pathname || '/home'
 
-        if (user2) {
+
+        if (user) {
             navigate(from, { replace: true })
         }
 
-    }, [user2])
+    }, [user])
 
     if (user2) {
-        window.location.href = "/home"
+        window.location.href = location.state?.form?.pathname || '/'
     }
+
+    // console.log(location?.state?.form?.pathname)
 
     // console.log(user2)
 

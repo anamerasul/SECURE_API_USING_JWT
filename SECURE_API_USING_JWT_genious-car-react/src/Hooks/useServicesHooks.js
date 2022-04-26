@@ -6,10 +6,10 @@ const useServicesHooks = () => {
 
     useEffect(() => {
 
-        const url = `http://localhost:${port}/service`
-        console.log(url)
+        const uri = `http://localhost:${port}/service`
+        console.log(uri)
 
-        fetch(url)
+        fetch(uri)
             .then(res => res.json())
             .then(data => setServices(data));
     }, [])

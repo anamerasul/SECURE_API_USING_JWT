@@ -4,6 +4,8 @@ import useServiceDetails from '../../../Hooks/useServiceDetails';
 import PageTitle from '../../Shared/PageTitle/PageTitle';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
+import axios from "axios";
+import { toast } from 'react-toastify';
 const Checkout = () => {
 
     const { serviceId } = useParams()
@@ -31,18 +33,48 @@ const Checkout = () => {
         return address
     }
 
-    const handlePlaceOrder = (e) => {
-        e.preventDefault()
+    const handlePlaceOrder = (event) => {
+        event.preventDefault()
+        // const order = {
+        //     name: user.displayName,
+        //     email: user.email,
+        //     service: service.name,
+        //     serviceId: serviceId,
+        //     address: e.target.address.value,
+        //     phone: e.target.phone.value
+        // }
+
+
+        // axios.post('http://localhost:4005/order', order)
+        //     .then(res => {
+        //         console.log(res)
+
+        //         const { data } = res
+
+        //         if (data.insertedID) {
+        //             toast('your order book')
+        //             e.target.reset()
+        //         }
+        //     })
+
+
+        // console.log(order);
+
         const order = {
-            name: user.displayName,
             email: user.email,
             service: service.name,
             serviceId: serviceId,
-            address: e.target.address.value,
-            phone: e.target.phone.value
+            address: event.target.address.value,
+            phone: event.target.phone.value
         }
-
-        console.log(order);
+        axios.post('http://localhost:4005/order', order)
+            .then(response => {
+                const { data } = response;
+                if (data.insertedId) {
+                    toast('Your order is booked!!!');
+                    event.target.reset();
+                }
+            })
     }
     return (
         <div className="w-50 mx-auto">
@@ -65,8 +97,8 @@ const Checkout = () => {
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button> */}
 
-                <input className='w-100 mb-2' type="text" readOnly disabled name="name" placeholder="name" value={user.displayName} required /><br />
-                <input readOnly disabled className='w-100 mb-2' type="email" name="email" placeholder="email" value={user.email} required /><br />
+                <input className='w-100 mb-2' type="text" readOnly disabled name="name" placeholder="name" value={user?.displayName} required /><br />
+                <input readOnly disabled className='w-100 mb-2' type="email" name="email" placeholder="email" value={user?.email} required /><br />
                 <input className='w-100 mb-2' type="text" name="service" disabled readOnly placeholder="service" value={service.name} required /><br />
                 <input className='w-100 mb-2' type="text" name="address" onChange={handleAddressChange} placeholder="address" value={user.address} required /><br />
                 <input className='w-100 mb-2' type="text" name="phone" placeholder="phone" value={user.phone} required /><br />

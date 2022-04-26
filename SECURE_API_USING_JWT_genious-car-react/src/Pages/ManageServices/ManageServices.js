@@ -4,9 +4,9 @@ const ManageServices = ({ port }) => {
 
     const [services, setServices] = useServicesHook([]);
 
-    const handleDeleteBtn = (id )  => {
+    const handleDeleteBtn = (id) => {
         // const procced = window.confirm("are you sure")
-        const url = `http://localhost:${port}/service/${id}`;
+        const uri = `http://localhost:${port}/service/${id}`;
         // if (procced) {
 
         //     const url = `http://localhost:${port}/service/${id}`
@@ -32,8 +32,8 @@ const ManageServices = ({ port }) => {
 
         const proceed = window.confirm('Are you sure?');
         if (proceed) {
-           
-            fetch(url, {
+
+            fetch(uri, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

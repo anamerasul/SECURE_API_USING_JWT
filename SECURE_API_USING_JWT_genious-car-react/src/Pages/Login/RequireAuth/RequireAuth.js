@@ -32,7 +32,6 @@ const RequireAuth = ({ children }) => {
             >
                 Verify email
             </button>
-            <ToastContainer></ToastContainer>
         </div>
     }
     return children;
