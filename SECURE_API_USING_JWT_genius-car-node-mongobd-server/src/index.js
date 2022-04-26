@@ -77,9 +77,20 @@ const run = async () => {
 
         app.post("/order", async (req, res) => {
             const order = req.body
+            console.log(order);
             const result = await orderCollection.insertOne(order)
             res.send(result)
         });
+        app.get('/order', async (req, res) => {
+
+
+            const query = {}
+            const cursor = orderCollection.find(query)
+
+            const services = await cursor.toArray()
+            res.send(services)
+        })
+
 
         // const users = { name: 'mahi', email: 'mahi@gmail.com' }
         // const result = await usercollection.insertOne(users)
