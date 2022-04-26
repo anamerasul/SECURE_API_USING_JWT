@@ -6,16 +6,29 @@ import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/a
 import auth from '../../../firebase.init';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Loading from '../../Shared/Loading/Loading';
+import axios from 'axios';
 
-const SocialLogin = () => {
+const SocialLogin = ({ url }) => {
+
+    console.log(url)
+
+
+    const path = `/login`
+    const uri = `${url}${path}`
 
 
     const user2 = auth.currentUser
+    const email = user2?.email
+
+    console.log(email)
+    console.log(user2?.email)
 
     // console.log(user2)
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
     const navigate = useNavigate();
+
+    // console.log(user?.email)
 
     const location = useLocation()
     let from = location.state?.form?.pathname || '/'
@@ -25,7 +38,7 @@ const SocialLogin = () => {
     let errorElement;
 
 
-    const socialSignUpIn = () => {
+    const socialSignUpIn = async () => {
 
         if (loading || loading1) {
             return <Loading></Loading>
@@ -36,7 +49,28 @@ const SocialLogin = () => {
         }
 
         if (user || user1) {
-            navigate(from, { replace: true })
+            // navigate(from, { replace: true })
+
+            const { data } = await axios.post(uri, { email })
+            console.log(!!data)
+
+            if (!!data) {
+                localStorage.setItem('accessToken', data);
+                console.log(data);
+
+                if (!!localStorage.getItem('accessToken')) {
+                    navigate(from, { replace: true });
+
+                }
+
+
+
+            }
+
+
+
+            console.log()
+            // navigate(from, { replace: true });
         }
 
 
@@ -45,19 +79,19 @@ const SocialLogin = () => {
 
     socialSignUpIn()
 
-    useEffect(() => {
+    // useEffect(() => {
 
 
 
-        if (user) {
-            navigate(from, { replace: true })
-        }
+    //     if (user) {
+    //         navigate(from, { replace: true })
+    //     }
 
-    }, [user])
+    // }, [user])
 
-    if (user2) {
-        window.location.href = location.state?.form?.pathname || '/'
-    }
+    // if (user2) {
+    //     window.location.href = location.state?.form?.pathname || '/'
+    // }
 
     // console.log(location?.state?.form?.pathname)
 

@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from "cors";
 import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
-
+import jwt from 'jsonwebtoken'
 
 
 const app = express()
@@ -11,6 +11,9 @@ const port = process.env.PORT || 5000;
 
 
 // middleware 
+
+// > crypto.randomBytes(64).toString('hex');
+// ''
 
 app.use(cors())
 
@@ -33,7 +36,18 @@ const run = async () => {
         console.log("db connected");
         const serviceCollection = client.db("JWTgeniousCar").collection("JWTservice");
         const orderCollection = client.db("JWTgeniousCar").collection("JWTorder");
+        // auth
+        app.post('/login', async (req, res) => {
+            const user = req.body
 
+            const accessToken = jwt.sign(user, process.env.NODE_ACCESS_JWT_TOKEN_SECRET, {
+                expiresIn: '1d'
+            })
+            res.send(accessToken)
+        })
+
+
+        // services api
         app.get('/service', async (req, res) => {
 
 

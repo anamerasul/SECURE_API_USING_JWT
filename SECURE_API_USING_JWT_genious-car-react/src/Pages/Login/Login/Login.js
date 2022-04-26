@@ -7,8 +7,15 @@ import Loading from '../../Shared/Loading/Loading';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
-const Login = () => {
+const Login = ({ url }) => {
+
+    console.log(url)
+
+    const path = `/login`
+    const uri = `${url}${path}`
+    console.log(uri);
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const navigate = useNavigate();
@@ -31,7 +38,7 @@ const Login = () => {
         }
 
         if (user) {
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
         }
 
         if (error) {
@@ -43,12 +50,19 @@ const Login = () => {
     loginCondition()
 
 
-    const handleSubmit = event => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
         signInWithEmailAndPassword(email, password);
+
+        const { data } = await axios.post(uri, { email })
+        console.log(data)
+
+        localStorage.setItem('accessToken', data);
+        navigate(from, { replace: true });
+
     }
 
     const navigateRegister = event => {
@@ -85,7 +99,7 @@ const Login = () => {
             {errorElement}
             <p>New to Genius Car? <Link to="/register" className='text-primary pe-auto text-decoration-none' onClick={navigateRegister}>Please Register</Link> </p>
             <p>Forget Password? <button className='btn btn-link text-primary pe-auto text-decoration-none' onClick={resetPassword}>Reset Password</button> </p>
-            <SocialLogin
+            <SocialLogin url={url}
             ></SocialLogin>
         </div>
     );

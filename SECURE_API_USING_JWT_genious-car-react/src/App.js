@@ -40,8 +40,8 @@ function App() {
         }></Route>
         <Route path='/service/:serviceId' element={<ServiceDetail url={url} port={port}></ServiceDetail>}></Route>
         <Route path="/about" element={<About></About>}></Route>
-        <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/register" element={<Register></Register>}></Route>
+        <Route path="/login" element={<Login url={url}></Login>}></Route>
+        <Route path="/register" element={<Register url={url}></Register>}></Route>
         <Route path="/checkout/:serviceId" element={
           <RequireAuth>
             <Checkout url={url}></Checkout>
