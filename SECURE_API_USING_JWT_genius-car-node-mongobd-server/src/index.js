@@ -82,13 +82,14 @@ const run = async () => {
             res.send(result)
         });
         app.get('/order', async (req, res) => {
+            const email = req.query.email
+            console.log(email)
 
-
-            const query = {}
+            const query = { email: email }
             const cursor = orderCollection.find(query)
 
-            const services = await cursor.toArray()
-            res.send(services)
+            const orders = await cursor.toArray()
+            res.send(orders)
         })
 
 
