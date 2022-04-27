@@ -60,7 +60,12 @@ const SocialLogin = ({ url }) => {
 
                 if (!!localStorage.getItem('accessToken')) {
                     navigate(from, { replace: true });
+                    window.location.href = location.state?.form?.pathname || '/'
 
+                }
+
+                else {
+                    return
                 }
 
 

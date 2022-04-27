@@ -1,31 +1,45 @@
+import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+// import axiosPrivate from '../../api/axiosPrivate';
+
 import auth from '../../firebase.init';
+
+import axiosPrivate from '../../Api/axiosPrivate';
 const Order = ({ url }) => {
 
     const [user] = useAuthState(auth)
 
-    console.log(url)
-    const path = `/order`
-    const email = user.email
 
-    const uri = `${url}${path}?email=${email}`
+
+    console.log(url)
+
+    const navigate = useNavigate();
+
 
     const [orders, setOrders] = useState({})
+
 
 
     useEffect(() => {
 
         const getOrders = async () => {
-
-            const { data } = await axios.get(uri)
-            setOrders(data)
-            console.log(uri)
-
+            const email = user.email;
+            const url = `http://localhost:4005/order?email=${email}`;
+            try {
+                const { data } = await axiosPrivate.get(url);
+                setOrders(data);
+            }
+            catch (error) {
+                console.log(error.message);
+                if (error.response.status === 401 || error.response.status === 403) {
+                    signOut(auth);
+                    navigate('/login')
+                }
+            }
         }
-        getOrders()
-
+        getOrders();
 
     }, [user])
 
